@@ -60,19 +60,13 @@ public class PoolTest {
         FabricaConexiones fc = new FabricaConexiones("aretico.com", 5432, "software_2", "grupo6", pwd);
         ObjectPool<Connection> pool = new GenericObjectPool<Connection>(fc);
         Connection c = pool.borrowObject();
-        pool.returnObject(c);
+        c.setAutoCommit(false);
         PreparedStatement pst = null;
-        String query = "INSERT INTO TBL_HILOS(hilo,registro) VALUES(?,?)";
-        c.prepareStatement(query);
-        for (int i = 0; i <= 3000; i++) {
-            pst.setString(1, "Hilo único");
-            pst.setInt(2, i);
-            pst.execute();
-        }
-        for (int i = 0; i < 1000; i++) {
-
-        }
-        c.createStatement().executeQuery("SELECT 1");
+        pst = c.prepareStatement("UPDATE tbl_hilos set hilo='Batch-2' WHERE hilo = 'Batch-2.1' and registro=86");
+        pst.execute();
+        pool.returnObject(c);
+        pst.execute();
+        c.commit();
 
     }
 
