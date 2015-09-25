@@ -15,7 +15,7 @@ public class ObjectPoolTest {
     
     public static final String pwd="YckGwYC8r3";
 
-    @Test(threadPoolSize = 1, invocationCount = 1)
+    @Test(threadPoolSize = 3, invocationCount = 1)
     public void probandoLaCreacionDeVariasConexiones() throws Exception {
         System.out.println(Thread.currentThread().getId());
         FabricaConexiones f=new FabricaConexiones("aretico.com",5432,"software_2","grupo6",pwd);

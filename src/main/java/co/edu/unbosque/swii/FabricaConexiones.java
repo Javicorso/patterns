@@ -31,9 +31,9 @@ public class FabricaConexiones implements PooledObjectFactory<Connection> {
 
     public PooledObject<Connection> makeObject() throws Exception {
         Class.forName("org.postgresql.Driver");
-        String url = "jdbc:postgresql://"+this.host+":"+this.port+"/"+this.database;
+        String url = "jdbc:postgresql://aretico.com:5432/software_2?currentSchema=grupo6";
         Connection connection = null;
-        connection = DriverManager.getConnection(url, this.usuario, this.pwd);
+        connection = DriverManager.getConnection(url, usuario, pwd);
         DefaultPooledObject defaultPooledObject = new DefaultPooledObject<Connection>(connection);
         return defaultPooledObject;
     }
@@ -58,7 +58,7 @@ public class FabricaConexiones implements PooledObjectFactory<Connection> {
     }
 
     public void passivateObject(PooledObject<Connection> pooledObject) throws Exception {
-        pooledObject.getObject().rollback();
-        pooledObject.getObject().close();
+        //pooledObject.getObject().rollback();
+        //pooledObject.getObject().close();
     }
 }
